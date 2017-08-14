@@ -1,5 +1,5 @@
 #-*- coding:utf-8 -*-
-# Auther: Mosuan
+# Author: Mosuan
 # Website: http://www.0aa.me
 # 备份目录文件扫描 tar zip .git .svn ...
 
@@ -22,7 +22,7 @@ logo = """
       _      _      _
    __(.)< __(.)> __(.)=
    \___)  \___)  \___)
-      _      _      _     Auther: Mosuan
+      _      _      _     Author: Mosuan
    __(.)< __(.)> __(.)=   Blog: http://www.0aa.me
    \___)  \___)  \___)    Version: FileScan v1
 """
