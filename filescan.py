@@ -26,7 +26,7 @@ logo = """
    __(.)< __(.)> __(.)=   Blog: http://www.0aa.me
    \___)  \___)  \___)    Version: FileScan v1
 """
-print logo
+print(logo)
 
 class FileScan(object):
 
