@@ -64,10 +64,12 @@ class Rule(object):
         dir_url.append(url)
         _dir = ""
         if len(_path) > 2:
-            _path.remove("")
             # 简单粗暴点
             if "." in _path[-1]: _path.pop()
             for num,str in enumerate(_path):
+                # 假如子元素为空
+                if not str:
+                    continue
                 _dir = _dir+"/"+str
                 dir_url.append(url+_dir)
 
