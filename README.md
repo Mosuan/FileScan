@@ -1,36 +1,42 @@
 # FileScan V1
 
-标签： 文件扫描 敏感文件扫描 敏感信息扫描
-
----
 > FileScan: 敏感文件扫描 / 二次判断降低误报率 / 扫描内容规则化 / 多目录扫描
 
 **程序只供交流，请勿用于非法用途，否则产生的一切后果自行承担！！!**
 
 **不知道filescan 这个名字有没有跟别人的重复，如果重复的话就用我最喜欢的火影忍者里面的神威吧，一个名字而已，叫什么都无所谓了。**
 
-**第三方库:** 
-`pip install requests`
+依赖
+----
+```
+pip install requests
+```
 
-**运行方式:** 
-`python filescan.py http://www.0aa.me `
-`python filescan.py http://www.0aa.me/0aa/index.php`
+运行方式
+----
+```
+python filescan.py http://www.0aa.me
+python filescan.py http://www.0aa.me/0aa/index.php
+```
 
-**目录:** 
+结构
+----
  - reque.py **requests发送请求**
  - filescan.py **入口文件，扫描结果相关**
  - rule_parse.py **解析规则**
  - backup_rule.py **扫描规则**
 
-**依靠什么来验证？**
-1. 返回状态码
-2. 返回内容正则判断
-3. 返回header
-4. 返回内容大小
+验证方式
+----
+ - 返回状态码
+ - 返回内容正则判断
+ - 返回header
+ - 返回内容大小
 
 **如果你只是想使用，不想添加规则，那么下面的东西你就不用看了。**
 
-**先说说规则吧，大概一条规则如下：**
+规则
+----
 
 
     # 规则名字，可以随便写
@@ -79,13 +85,14 @@
 
 
 看起来可能有些复杂，认真点看，其实不难，我认为很好理解。
+
 规则里面的`rule_true`字段里面的几个替换符的意思如下:
-- 程序会将你传入的url用urlparse库解析出host，大概的意思就是下面这样
-比如一个url: http://www.0aa.me
- 1. **[DOMAIN]**   == 0aa.me
- 2. **[HOST]**     == www.0aa.me
- 3. **[HOSTNAME]** == 0aa
- 4. **[TIME]** 这个特殊一点，根据你扫描的日期，获取前几天的日期（默认前两天），如：今天20170809，会生成三种格式：
+程序会将你传入的url用`urlparse`库解析出host，大概的意思就是下面这样：
+如url: http://www.0aa.me
+ - [DOMAIN]   == 0aa.me
+ - [HOST]    == www.0aa.me
+ - [HOSTNAME] == 0aa
+ - [TIME] 这个特殊一点，根据你扫描的日期，获取前几天的日期（默认前两天），如：今天20170809，会生成三种格式：
 ```
 2017—08-09 / 2017—08-08 / 2017—08-07
 
@@ -94,17 +101,25 @@
 20170809 / 20170808 / 20170807
 ```
 
-**配置相关：**
-如果你想扫描更前面的日期，可以配置：
-`rule_parse.py 里面的 self.timenum 变量`
+配置相关
+----
+**如果你想扫描更前面的日期，可以配置：**
+```
+rule_parse.py 里面的 self.timenum 变量
+```
 
-限速：
-`filescan.py 里面的 self.sleep_time 变量`
+**限速：**
+```
+filescan.py 里面的 self.sleep_time 变量
+```
 
-请求timeout时间：
-`reque.py 里面的 self.timeout 变量`
+**请求timeout时间：**
+```
+reque.py 里面的 self.timeout 变量
+```
 
-**效果：**
+效果
+----
 注：图中的url是我绑的host
 
 ![run filescan][1]
