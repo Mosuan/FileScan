@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 # Author: Mosuan
 # Website: http://www.0aa.me
 # 备份目录文件扫描 tar zip .git .svn ...
@@ -7,7 +7,7 @@ import re
 import sys
 import time
 import logging
-import urlparse
+import urllib.parse as urlparse
 import threading
 
 from reque import Reque
@@ -27,6 +27,7 @@ logo = """
    \___)  \___)  \___)    Version: FileScan v1
 """
 print(logo)
+
 
 class FileScan(object):
 
@@ -64,7 +65,7 @@ class FileScan(object):
             check = []
             length = result.get("length", "")
             status_code = result.get("status_code", "")
-            header = result.get("header",{})
+            header = result.get("header", {})
             reg = result.get("reg", [])
             #
             if length:
@@ -76,7 +77,7 @@ class FileScan(object):
             if header:
                 check.append(self._header(response.headers, header))
 
-            is_check = [num for x in range(0,len(check)) if check[x]]
+            is_check = [num for x in range(0, len(check)) if check[x]]
             # 说明可能存在
             if len(is_check) == num:
                 # 判断是否存在黑名单
@@ -85,13 +86,12 @@ class FileScan(object):
                     return True
         return False
 
-
     def _status_code(self, code, result):
         """
         判断响应状态
         """
         if isinstance(result, list):
-            for num,status_code in enumerate(result):
+            for num, status_code in enumerate(result):
                 if status_code == code:
                     return True
         return False
@@ -109,7 +109,7 @@ class FileScan(object):
         判断回显内容
         """
         if isinstance(result, list):
-            for num,reg in enumerate(result):
+            for num, reg in enumerate(result):
                 if len(re.findall(reg.lower(), content.lower())) > 0:
                     return True
         return False
@@ -121,10 +121,10 @@ class FileScan(object):
         if isinstance(result, dict):
             for item in result:
                 _rule = result[item]
-                if isinstance(_rule, basestring):
+                if isinstance(_rule, str):
                     _rule = list(_rule)
-                for num,reg in enumerate(_rule):
-                    if len(re.findall(reg, header.get(item,""))) > 0:
+                for num, reg in enumerate(_rule):
+                    if len(re.findall(reg, header.get(item, ""))) > 0:
                         return True
         return False
 
@@ -132,11 +132,11 @@ class FileScan(object):
         """
         黑名单判断
         """
-        _black = backup_rule.get("balcklist",{})
+        _black = backup_rule.get("balcklist", {})
         if _black:
-            black_html = _black.get("html",[])
+            black_html = _black.get("html", [])
             if black_html:
-                for num,str in enumerate(black_html):
+                for num, str in enumerate(black_html):
                     if len(re.findall(str.lower(), response.content.lower())) > 0:
                         return True
         return False
@@ -145,8 +145,8 @@ class FileScan(object):
         host_list = ["gov.cn", "edu.cn"]
         parse = urlparse.urlparse(url)
         domain = parse.netloc.split(".")
-        hostname = domain[-2]+"."+domain[-1]
-        for num,host in enumerate(host_list):
+        hostname = domain[-2] + "." + domain[-1]
+        for num, host in enumerate(host_list):
             if host == hostname:
                 return False
         return True
@@ -159,7 +159,7 @@ class FileScan(object):
         if not self.result:
             print("没有扫到敏感信息泄露")
         else:
-            for num,url in enumerate(self.result):
+            for num, url in enumerate(self.result):
                 print("[**] url:{} 存在敏感信息泄露".format(url))
 
     def main(self, url):
@@ -179,6 +179,7 @@ class FileScan(object):
         print("\n耗时: {}秒".format(end_time - start_time))
         # 存在则输出数据
         self._data_print()
+
 
 if __name__ == '__main__':
     url = sys.argv[1]
